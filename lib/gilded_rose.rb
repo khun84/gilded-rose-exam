@@ -1,53 +1,45 @@
+require 'ostruct'
 class GildedRose
+  DEFAULT_QUALITY_TYPE = :degradable
+  QUALITY_TYPE_MAPPER = {
+    "Backstage passes to a TAFKAL80ETC concert" => :stepped_increaseable,
+    "Sulfuras, Hand of Ragnaros" => :legendary,
+    "Aged Brie" => :increaseable
+  }.freeze
+
   def initialize(items)
     @items = items
   end
 
   def update_quality
     @items.each do |item|
-      if item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
-      else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
-      end
+      update_ctx = build_update_ctx(item)
+      calculator = dispatch_calculator(update_ctx.type)
+      new_quality = calculator.run(update_ctx)
+      refresh_sell_in(update_ctx)
+      refresh_quality(update_ctx, new_quality)
     end
+  end
+
+  private
+
+  def build_update_ctx(item)
+    OpenStruct.new(
+      obj: item,
+      type: QUALITY_TYPE_MAPPER[item.name] || DEFAULT_QUALITY_TYPE
+    )
+  end
+
+  def refresh_sell_in(ctx)
+    return if ctx.type == :legendary
+    ctx.obj.sell_in -= 1
+  end
+
+  def refresh_quality(ctx, val)
+    ctx.obj.quality = val
+  end
+
+  def dispatch_calculator(type)
+    QualityCalculators.get_calculator(type)
   end
 end
