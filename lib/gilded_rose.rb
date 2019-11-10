@@ -1,4 +1,10 @@
 require 'ostruct'
+require_relative './quality_calculators'
+QualityCalculators.register(QualityCalculator::Degradable, :degradable)
+QualityCalculators.register(QualityCalculator::Legendary, :legendary)
+QualityCalculators.register(QualityCalculator::SteppedIncreaseable, :stepped_increaseable)
+QualityCalculators.register(QualityCalculator::Increaseable, :increaseable)
+
 class GildedRose
   DEFAULT_QUALITY_TYPE = :degradable
   QUALITY_TYPE_MAPPER = {
