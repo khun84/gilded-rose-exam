@@ -4,13 +4,15 @@ QualityCalculators.register(QualityCalculator::Degradable, :degradable)
 QualityCalculators.register(QualityCalculator::Legendary, :legendary)
 QualityCalculators.register(QualityCalculator::SteppedIncreaseable, :stepped_increaseable)
 QualityCalculators.register(QualityCalculator::Increaseable, :increaseable)
+QualityCalculators.register(QualityCalculator::DoubleDegradable, :double_degradable)
 
 class GildedRose
   DEFAULT_QUALITY_TYPE = :degradable
   QUALITY_TYPE_MAPPER = {
     "Backstage passes to a TAFKAL80ETC concert" => :stepped_increaseable,
     "Sulfuras, Hand of Ragnaros" => :legendary,
-    "Aged Brie" => :increaseable
+    "Aged Brie" => :increaseable,
+    "Conjured" => :double_degradable
   }.freeze
 
   def initialize(items)
