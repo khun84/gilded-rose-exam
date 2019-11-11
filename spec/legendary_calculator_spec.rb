@@ -3,6 +3,8 @@ require_relative '../lib/../lib/item'
 
 RSpec.describe QualityCalculator::Legendary do
   describe '.run' do
+    let(:sell_in) { 5 }
+    let(:quality) { 100 }
     let(:item) { Item.new('foo', 5, 100) }
     let(:ctx) { double(obj: item) }
 
@@ -12,9 +14,9 @@ RSpec.describe QualityCalculator::Legendary do
       expect(subject).to eq 100
     end
 
-    context 'when sell_in is less than 0' do
+    context 'when sell_in is going to be less than 0' do
+      let(:sell_in) { 0 }
       it 'should return the same quality value' do
-        item.sell_in = 0
         expect(subject).to eq 100
       end
     end

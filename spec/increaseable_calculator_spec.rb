@@ -3,7 +3,9 @@ require_relative '../lib/../lib/item'
 
 RSpec.describe QualityCalculator::Increaseable do
   describe '.run' do
-    let(:item) { Item.new('foo', 5, 20) }
+    let(:sell_in) { 5 }
+    let(:quality) { 20 }
+    let(:item) { Item.new('foo', sell_in, quality) }
     let(:ctx) { double(obj: item) }
 
     subject { described_class.run(ctx) }
@@ -12,9 +14,11 @@ RSpec.describe QualityCalculator::Increaseable do
       expect(subject).to eq 21
     end
 
-    it 'should return quality not greater than 50' do
-      item.quality = 50
-      expect(subject).to eq 50
+    context 'when quality reached maximum' do
+      let(:quality) { 50 }
+      it 'should return quality not greater than 50' do
+        expect(subject).to eq 50
+      end
     end
   end
 end
