@@ -21,3 +21,7 @@ class QualityCalculators
     instance.calculators[type]
   end
 end
+
+Dir.glob(File.join(File.dirname(__FILE__), 'quality_calculator/*.rb')).each do |f|
+  require f
+end
