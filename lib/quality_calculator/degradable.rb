@@ -6,8 +6,6 @@ module QualityCalculator
       lteq_min_quality?(quality) ? min_quality : quality
     end
 
-    private
-
     def base_decrement
       1
     end
