@@ -2,6 +2,7 @@ module QualityCalculator
   class Base
     attr_reader :ctx
 
+    # Expect a wrapper object that respond to :obj (the quality instance) and type
     def self.run(ctx)
       new(ctx).run
     end
