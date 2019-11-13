@@ -1,12 +1,9 @@
 require 'ostruct'
-require_relative './quality_calculators'
-QualityCalculators.register(QualityCalculator::Degradable, :degradable)
-QualityCalculators.register(QualityCalculator::Legendary, :legendary)
-QualityCalculators.register(QualityCalculator::SteppedIncreaseable, :stepped_increaseable)
-QualityCalculators.register(QualityCalculator::Increaseable, :increaseable)
-QualityCalculators.register(QualityCalculator::DoubleDegradable, :double_degradable)
+require_relative 'calculable'
 
 class GildedRose
+  include Calculable
+
   DEFAULT_QUALITY_TYPE = :degradable
   QUALITY_TYPE_MAPPER = {
     "Backstage passes to a TAFKAL80ETC concert" => :stepped_increaseable,
@@ -45,9 +42,5 @@ class GildedRose
 
   def refresh_quality(ctx, val)
     ctx.obj.quality = val
-  end
-
-  def dispatch_calculator(type)
-    QualityCalculators.get_calculator(type)
   end
 end

@@ -10,7 +10,7 @@ class QualityCalculators
   end
 
   def self.register(klass, type)
-    instance.calculators[type] = klass
+    instance.calculators[type] ||= klass
   end
 
   def self.calculators
