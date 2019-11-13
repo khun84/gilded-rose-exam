@@ -19,8 +19,7 @@ class GildedRose
   def update_quality
     @items.each do |item|
       update_ctx = build_update_ctx(item)
-      calculator = dispatch_calculator(update_ctx.type)
-      new_quality = calculator.run(update_ctx)
+      new_quality = calculate_quality(update_ctx)
       refresh_sell_in(update_ctx)
       refresh_quality(update_ctx, new_quality)
     end

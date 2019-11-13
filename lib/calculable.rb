@@ -8,6 +8,13 @@ module Calculable
   QualityCalculators.register(QualityCalculator::Increaseable, :increaseable)
   QualityCalculators.register(QualityCalculator::DoubleDegradable, :double_degradable)
 
+  def calculate_quality(ctx)
+    calculator = dispatch_calculator(ctx.type)
+    calculator.run(ctx)
+  end
+
+  private
+
   def dispatch_calculator(type)
     QualityCalculators.get_calculator(type)
   end
