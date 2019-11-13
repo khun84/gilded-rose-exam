@@ -18,7 +18,7 @@ class Calculable << MODULE >> {
     * calculator dispatcher
     * place to configure new calculator 
     --
-    + dispatch_calculator
+    + calculate_quality
 }
 class QualityCalculators << singleton >> {
     * keeper of all the calculators
@@ -28,9 +28,9 @@ class QualityCalculators << singleton >> {
 }
 
 GildedRose -.-right> Calculable
-Calculable -.down-> QualityCalculators
 
-QualityCalculators o-down-> QualityCalculator : has many >
+QualityCalculators o-u-> QualityCalculator : has many >
+QualityCalculator -u-|> Calculable
 
 namespace QualityCalculator {
   abstract class Base {
@@ -49,5 +49,5 @@ namespace QualityCalculator {
   SteppedIncreaseable -up-|> Base : extends
 }
 ```
-![class-diagram](http://www.plantuml.com/plantuml/png/TL5TIyCm57tFhxZYYr_P3nYZe9k8i24gFezhSjS6iwGcANFe_hlfsdMPje52Ui_9EISdPv9MoX0idcPlytkuMDoSt-xN9MD2e_VmeBGa-M8zmJU3kAwXAYK6MdvMg5NOibtBdA8MbSPtJJ2P71Iph3rs1QB1WtKWbIynY89SYvKQ1K6m8AnPgRno18OswP4zaVCsma5WUMHqEPwRNDCEyNKUhqokALYJHleWAic1NG5g3Q6WnD6VEkOKKhDcw2XNFb3jpPAY-8WxbHSXIpfXIJry9Et6yAmdAcCzyIqVuiCO2lImHhE5Z363Quh5n2h_C-ixuxiF3aM0fgaxJ5xLLIRkTl5hm1db3kK-UZUoLVpj0HwDS1J5JePpoib8TDjkyXgeB4cUi2Du50HUbVmdQuADWRv2LAWVug_p837L7YHroGOPFKa7kBjV
+![class-diagram](http://www.plantuml.com/plantuml/png/TL5jIyCm4FwUNt7Y5z_g3nYZe9k8i24gVXwtvDO6iwGcAJgq_ztqPLrhsq2XkUVbdhkS2Tf9JR1-Nhwl7k1YVND-LvrBnhX2v-1HAa7YrJY27mRXN4EU2VIq-SnHINzWHSDSeEAvmgqYcC-FZd7SoAw0rxWt5eHq6NgUacsmJ24dy0QuqJkPv9P0qrTNKX6Zg8bm18OfNkhxebMwCesJEb7aZUu6-Y3Ao8BP0Ie5FgLEFzVlbv3VdC2cQ2cHpeSP2iOwQufk8okJrCUTZJ0saij4UHGF0yCCKdImHts0UAY3eFhjUslSKrXesE2GNGwBM-SjSW_rYkwnyvWsr-6l25yDBYcnA2hVjcJoS1q1dZIt5CnwnHKbf0NQGrjvyvHb97hi09uCmqXPELCLR0RqxOD3-GB_EqyIkzwJf3RP96CawGIt-0C0
 )
